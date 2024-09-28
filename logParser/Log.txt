@@ -1,21 +1,113 @@
+### Updated Log File with Interspersed Log Entries:
+
+```log
 2024-09-26 09:00:01 INFO  [USER_AUTH] - User login attempt: username=johndoe, ip=192.168.1.100
 2024-09-26 09:00:02 INFO  [USER_AUTH] - User login successful: username=johndoe, sessionID=123456, ip=192.168.1.100
-2024-09-26 09:00:05 INFO  [API_CALL] - GET /api/v1/products?category=electronics, ip=192.168.1.100, status=200, responseTime=350ms
-2024-09-26 09:00:06 WARN  [API_CALL] - POST /api/v1/order, ip=192.168.1.100, status=400, responseTime=500ms, error="Invalid payment method"
-2024-09-26 09:00:08 ERROR [DB_QUERY] - Failed to execute query: SELECT * FROM orders WHERE userId=123; error="Timeout after 5000ms"
-2024-09-26 09:00:12 INFO  [API_CALL] - PUT /api/v1/user/profile, ip=192.168.1.101, status=200, responseTime=200ms
-2024-09-26 09:00:15 INFO  [API_CALL] - GET /api/v1/products?category=books, ip=192.168.1.102, status=200, responseTime=420ms
-2024-09-26 09:00:20 ERROR [API_CALL] - POST /api/v1/payment, ip=192.168.1.101, status=500, responseTime=1200ms, error="Internal server error"
-2024-09-26 09:00:22 DEBUG [CACHE_HIT] - Cache hit: user_id=123, cache_key="user_profile_123"
-2024-09-26 09:00:25 INFO  [API_CALL] - DELETE /api/v1/user/account, ip=192.168.1.103, status=204, responseTime=150ms
-2024-09-26 09:00:30 INFO  [USER_LOGOUT] - User logout: username=johndoe, sessionID=123456, ip=192.168.1.100
-2024-09-26 09:01:02 WARN  [DB_CONNECTION] - Database connection slow: server=dbserver1, latency=350ms
-2024-09-26 09:01:12 ERROR [DB_QUERY] - Failed to execute query: INSERT INTO orders (id, userId, total) VALUES (1, 123, 99.99); error="Duplicate entry for key 'PRIMARY'"
-2024-09-26 09:01:20 DEBUG [QUEUE] - Message pushed to queue: queueName="order_processing", messageId=789
-2024-09-26 09:01:25 INFO  [EMAIL] - Sending confirmation email: userId=123, email=johndoe@example.com, status="queued"
-2024-09-26 09:01:30 WARN  [API_CALL] - GET /api/v1/orders/12345, ip=192.168.1.104, status=404, responseTime=300ms, error="Order not found"
-2024-09-26 09:01:35 INFO  [API_CALL] - PATCH /api/v1/order/12345/status, ip=192.168.1.105, status=200, responseTime=250ms
-2024-09-26 09:01:40 DEBUG [CACHE_MISS] - Cache miss: user_id=456, cache_key="user_profile_456"
-2024-09-26 09:02:00 INFO  [SYSTEM] - Backup process started, processId=1111
-2024-09-26 09:02:30 INFO  [SYSTEM] - Backup process completed successfully, processId=1111, duration=30s
+2024-09-26 09:00:05 INFO  [API_CALL] - REQUEST: GET /api/v1/products?category=electronics, ip=192.168.1.100, requestId=abc123
+2024-09-26 09:00:06 WARN  [DB_CONNECTION] - Database connection slow: server=dbserver1, latency=350ms
+2024-09-26 09:00:06 DEBUG [CACHE_HIT] - Cache hit: user_id=123, cache_key="user_profile_123"
+2024-09-26 09:00:07 INFO  [SYSTEM] - Backup process started, processId=1111
+2024-09-26 09:00:10 INFO  [API_CALL] - REQUEST: POST /api/v1/order, ip=192.168.1.100, requestId=abc124
+2024-09-26 09:00:12 INFO  [API_CALL] - REQUEST: PUT /api/v1/user/profile, ip=192.168.1.101, requestId=abc125
+2024-09-26 09:00:12 INFO  [SYSTEM] - Backup process completed successfully, processId=1111, duration=30s
+2024-09-26 09:00:15 INFO  [USER_LOGOUT] - User logout: username=johndoe, sessionID=123456, ip=192.168.1.100
+2024-09-26 09:00:16 INFO  [API_CALL] - RESPONSE: GET /api/v1/products?category=electronics, ip=192.168.1.100, status=200, responseTime=350ms, requestId=abc123
+2024-09-26 09:00:18 ERROR [DB_QUERY] - Failed to execute query: SELECT * FROM orders WHERE userId=123; error="Timeout after 5000ms"
+2024-09-26 09:00:20 INFO  [API_CALL] - REQUEST: GET /api/v1/products?category=books, ip=192.168.1.102, requestId=abc126
+2024-09-26 09:00:22 WARN  [API_CALL] - REQUEST: POST /api/v1/payment, ip=192.168.1.101, requestId=abc127
+2024-09-26 09:00:24 DEBUG [QUEUE] - Message pushed to queue: queueName="order_processing", messageId=789
+2024-09-26 09:00:26 INFO  [API_CALL] - RESPONSE: POST /api/v1/order, ip=192.168.1.100, status=400, responseTime=500ms, error="Invalid payment method", requestId=abc124
+2024-09-26 09:00:28 INFO  [EMAIL] - Sending confirmation email: userId=123, email=johndoe@example.com, status="queued"
+2024-09-26 09:00:30 ERROR [API_CALL] - RESPONSE: POST /api/v1/payment, ip=192.168.1.101, status=500, responseTime=1200ms, error="Internal server error", requestId=abc127
+2024-09-26 09:00:32 INFO  [API_CALL] - REQUEST: DELETE /api/v1/user/account, ip=192.168.1.103, requestId=abc128
+2024-09-26 09:00:35 INFO  [API_CALL] - RESPONSE: PUT /api/v1/user/profile, ip=192.168.1.101, status=200, responseTime=200ms, requestId=abc125
+2024-09-26 09:00:38 INFO  [API_CALL] - REQUEST: PATCH /api/v1/order/12345/status, ip=192.168.1.105, requestId=abc130
+2024-09-26 09:00:40 INFO  [API_CALL] - RESPONSE: GET /api/v1/products?category=books, ip=192.168.1.102, status=200, responseTime=420ms, requestId=abc126
+2024-09-26 09:00:42 WARN  [API_CALL] - RESPONSE: GET /api/v1/orders/12345, ip=192.168.1.104, status=404, responseTime=300ms, error="Order not found", requestId=abc129
+2024-09-26 09:00:45 DEBUG [CACHE_MISS] - Cache miss: user_id=456, cache_key="user_profile_456", timestamp=2024-09-26 09:00:45
+2024-09-26 09:00:50 INFO  [API_CALL] - RESPONSE: DELETE /api/v1/user/account, ip=192.168.1.103, status=204, responseTime=150ms, requestId=abc128
+2024-09-26 09:00:55 INFO  [API_CALL] - RESPONSE: PATCH /api/v1/order/12345/status, ip=192.168.1.105, status=200, responseTime=250ms, requestId=abc130
+```
 
+### Parsing Tasks You Can Perform on This Log
+
+Since the requests and responses are not next to each other, the parsing process requires matching each **`REQUEST`** and **`RESPONSE`** log using the `requestId`. Here’s how you can approach various tasks:
+
+---
+
+#### 1. **API Response Time Calculation**
+
+For each request, you’ll need to:
+1. Extract the `requestId` from the `REQUEST` log.
+2. Search through the logs to find the matching `RESPONSE` with the same `requestId`.
+3. Either use the provided `responseTime` in the `RESPONSE` log or calculate the time difference between the timestamps in the `REQUEST` and `RESPONSE` logs if both have timestamps.
+
+#### Example Approach:
+1. Read all log lines.
+2. Store each `REQUEST` with the `requestId` in a map.
+3. As you encounter `RESPONSE` logs, check the map for the matching `requestId`, compute the time difference, and extract the `responseTime`.
+
+---
+
+#### 2. **Error Analysis**
+
+- **Track API Errors**: Look for `ERROR` or `WARN` logs in the `API_CALL` category. Capture the error messages and correlate them with the request/response cycles to identify which API calls are failing frequently.
+- **Identify Slow Queries**: Search for `DB_QUERY` logs that contain errors such as timeouts or failed queries (e.g., `"Timeout after 5000ms"` or `"Duplicate entry for key 'PRIMARY'"`).
+
+---
+
+#### 3. **Measure API Performance**
+
+- By tracking each `REQUEST` and `RESPONSE` log, you can calculate statistics on each API endpoint. For example:
+  - Which endpoints have the longest average response times.
+  - Which ones return the most errors (e.g., `400`, `500` statuses).
+  - What is the distribution of response times (e.g., 95th percentile, min/max).
+
+---
+
+#### 4. **Cache Efficiency**
+
+- Use `CACHE_HIT` and `CACHE_MISS` logs to track the efficiency of your caching mechanism. Analyze how often a cache miss occurs compared to cache hits, and which cache keys are frequently missed.
+  
+  **Cache Hit/Miss Metrics**:
+  - Count how often a cache hit occurs (`CACHE_HIT`) vs. cache miss (`CACHE_MISS`).
+  - Analyze which cache keys (e.g., `"user_profile_123"`) result in frequent cache misses.
+
+---
+
+#### 5. **Track Database Performance**
+
+- Track `DB_CONNECTION` logs for slow connections or disconnections.
+- Track `DB_QUERY` logs for failed queries or timeouts. Identify which queries are problematic by analyzing the error message content and response time.
+  
+  **Database Performance Metrics**:
+  - How often do database timeouts occur?
+  - What is the average query execution time? Are there specific queries that fail more often than others?
+
+---
+
+### Example Parsing Workflow:
+
+1. **Start by reading the log line-by-line**:
+   - Each line can be categorized by the `log level` (INFO, ERROR, WARN, DEBUG), `component` (API_CALL, DB_QUERY, CACHE_HIT, etc.), and the action it describes (`REQUEST`, `RESPONSE`, etc.).
+   
+2. **Use `requestId` to pair API requests and responses**:
+   - For each API `REQUEST`, store its `timestamp`, `endpoint`, and `requestId` in a map or list.
+   - For each API `RESPONSE`, search for the corresponding `REQUEST` by `requestId` and compute the response time.
+
+3. **Store and aggregate results**:
+   -
+
+ You can use data structures like hashmaps or lists to store processed data (e.g., response times for each endpoint).
+   - For errors, you can log or count the occurrences of each specific error message to generate an error report.
+
+4. **Compute complex statistics**:
+   - Calculate average response times, slowest endpoints, error rates, cache hit/miss ratios, etc.
+
+---
+
+### Conclusion:
+
+By ensuring the request and response logs are interleaved with other log entries, you can create a more realistic scenario where parsing is required to link related events. This mirrors real-world log parsing tasks where log entries are not always sequentially organized. The log parser should use unique identifiers (like `requestId`) and timestamps to compute metrics, track errors, and extract performance data.
+
+Let me know if you would like an example of Java code to parse these logs!
