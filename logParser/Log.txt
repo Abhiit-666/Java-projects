@@ -1,0 +1,21 @@
+2024-09-26 09:00:01 INFO  [USER_AUTH] - User login attempt: username=johndoe, ip=192.168.1.100
+2024-09-26 09:00:02 INFO  [USER_AUTH] - User login successful: username=johndoe, sessionID=123456, ip=192.168.1.100
+2024-09-26 09:00:05 INFO  [API_CALL] - GET /api/v1/products?category=electronics, ip=192.168.1.100, status=200, responseTime=350ms
+2024-09-26 09:00:06 WARN  [API_CALL] - POST /api/v1/order, ip=192.168.1.100, status=400, responseTime=500ms, error="Invalid payment method"
+2024-09-26 09:00:08 ERROR [DB_QUERY] - Failed to execute query: SELECT * FROM orders WHERE userId=123; error="Timeout after 5000ms"
+2024-09-26 09:00:12 INFO  [API_CALL] - PUT /api/v1/user/profile, ip=192.168.1.101, status=200, responseTime=200ms
+2024-09-26 09:00:15 INFO  [API_CALL] - GET /api/v1/products?category=books, ip=192.168.1.102, status=200, responseTime=420ms
+2024-09-26 09:00:20 ERROR [API_CALL] - POST /api/v1/payment, ip=192.168.1.101, status=500, responseTime=1200ms, error="Internal server error"
+2024-09-26 09:00:22 DEBUG [CACHE_HIT] - Cache hit: user_id=123, cache_key="user_profile_123"
+2024-09-26 09:00:25 INFO  [API_CALL] - DELETE /api/v1/user/account, ip=192.168.1.103, status=204, responseTime=150ms
+2024-09-26 09:00:30 INFO  [USER_LOGOUT] - User logout: username=johndoe, sessionID=123456, ip=192.168.1.100
+2024-09-26 09:01:02 WARN  [DB_CONNECTION] - Database connection slow: server=dbserver1, latency=350ms
+2024-09-26 09:01:12 ERROR [DB_QUERY] - Failed to execute query: INSERT INTO orders (id, userId, total) VALUES (1, 123, 99.99); error="Duplicate entry for key 'PRIMARY'"
+2024-09-26 09:01:20 DEBUG [QUEUE] - Message pushed to queue: queueName="order_processing", messageId=789
+2024-09-26 09:01:25 INFO  [EMAIL] - Sending confirmation email: userId=123, email=johndoe@example.com, status="queued"
+2024-09-26 09:01:30 WARN  [API_CALL] - GET /api/v1/orders/12345, ip=192.168.1.104, status=404, responseTime=300ms, error="Order not found"
+2024-09-26 09:01:35 INFO  [API_CALL] - PATCH /api/v1/order/12345/status, ip=192.168.1.105, status=200, responseTime=250ms
+2024-09-26 09:01:40 DEBUG [CACHE_MISS] - Cache miss: user_id=456, cache_key="user_profile_456"
+2024-09-26 09:02:00 INFO  [SYSTEM] - Backup process started, processId=1111
+2024-09-26 09:02:30 INFO  [SYSTEM] - Backup process completed successfully, processId=1111, duration=30s
+

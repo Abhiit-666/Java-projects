@@ -1,0 +1,63 @@
+1. Custom Compiler/Interpreter
+Description: Build a simple custom programming language and create a compiler or interpreter for it.
+Challenges:
+Implement lexical analysis to tokenize input source code.
+Create a parser that converts tokens into an abstract syntax tree (AST).
+Implement semantic analysis to check for valid variable declarations, scope management, etc.
+Generate intermediate or machine code, or directly interpret the code.
+Optionally build in error handling and diagnostics (e.g., report syntax errors, type mismatches).
+2. Event-Driven Microservice Architecture
+Description: Design a set of microservices that communicate asynchronously via events (e.g., order service, payment service, notification service). Each service processes data independently and publishes/subscribes to event streams.
+Challenges:
+Set up a message broker like RabbitMQ or Kafka for event communication between services.
+Implement event handling and retries for failed messages.
+Ensure that services are decoupled and follow event-driven principles.
+Build monitoring and alerting mechanisms to track service performance and uptime.
+Implement distributed logging and tracing for debugging.
+3. Password Manager
+Description: Build a simple password manager where users can store and retrieve their passwords securely.
+Challenges:
+Store passwords securely using encryption.
+Provide a user interface to add, view, and delete passwords.
+Implement search functionality to quickly find a stored password.
+Ensure data is stored locally, with optional password protection for accessing the manager.
+4. Password-Protected File Vault
+Description: Create an encrypted file vault that allows users to securely store sensitive files on their local machine.
+Challenges:
+Implement file encryption and decryption using a strong encryption algorithm (e.g., AES).
+Allow users to add, remove, and view files in the vault after entering a correct password.
+Implement password hashing and salting to ensure the user's password is securely stored.
+Provide functionality to export and import encrypted archives for backup purposes.
+Optionally, add two-factor authentication (2FA) to enhance security.
+5.Custom Database Engine
+Description: Build your own database engine from scratch, supporting basic CRUD operations, indexing, and querying.
+Challenges:
+Implement a storage engine to manage and retrieve records efficiently.
+Support basic indexing (e.g., B-tree or hash-based indexes) to speed up queries.
+Implement a simple query language (or command-based interface) that allows users to retrieve, insert, update, and delete records.
+Add support for transactions with basic ACID (Atomicity, Consistency, Isolation, Durability) properties.
+Optimize the system for performance and ensure scalability for large datasets.
+6.Custom Search Engine for Local Files
+Description: Build a search engine that indexes and searches through files on the local machine (e.g., text, documents, or code files).
+Challenges:
+Implement an indexing system that parses and stores the contents of files in a way that enables fast searching (e.g., inverted index).
+Support full-text search with features like fuzzy matching, phrase searching, and filtering by file type.
+Optimize for large numbers of files and large file sizes.
+Provide a user interface (or command-line interface) for users to perform searches and view results.
+Optionally add file preview functionality, showing snippets around the search terms.
+7.File Version Control System
+Description: Build a simple version control system like Git that tracks changes to files over time and allows users to commit, view, and revert changes.
+Challenges:
+Implement a system that tracks file changes (e.g., diffs between versions) and stores the file history efficiently.
+Allow users to commit changes, view the log of past changes, and revert to previous versions.
+Build your own diff algorithm to track differences between file versions.
+Add support for branching and merging changes, with conflict resolution logic.
+Optimize for performance, especially with large files.
+8.Local Multiplayer Game (Turn-based or Real-time)
+Description: Develop a local multiplayer game that two or more players can play either via hot-seat (turn-based) or over a local network (real-time).
+Challenges:
+Implement the game mechanics for a two-player or multiplayer game (e.g., chess, tic-tac-toe, or a custom board game).
+For real-time gameplay, implement a local networking solution to synchronize game state between players' machines.
+Ensure that player inputs are correctly synchronized and conflicts (e.g., simultaneous moves) are resolved.
+Optionally add AI opponents for single-player mode, but keep AI simple (non-ML-based).
+Provide a UI for managing players, game setup, and displaying results.
