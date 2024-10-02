@@ -61,6 +61,7 @@ public class Parsertxt{
         
         
     Map <String,List<String>> ReqRes= new HashMap<>(); 
+    Map <String,Long> ResponseTime= new HashMap<>();
     public void processInfo(String message,String func,String DTTM){
 
         if(func.equalsIgnoreCase("api_call")){
@@ -80,15 +81,17 @@ public class Parsertxt{
         }
     }
     public void calcTime(String api,String DTTM){
+        
         String reqTime=ReqRes.get(api).get(1);
         String resTime= DTTM;
         DateTimeFormatter formatter= DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS");
         LocalDateTime reqTimeA=LocalDateTime.parse(reqTime, formatter);
         LocalDateTime resTimeA=LocalDateTime.parse(resTime,formatter);
         Duration responseTime=Duration.between(resTimeA,reqTimeA);
-
+        
+        ResponseTime.put(api, responseTime.getSeconds());
         StringBuilder diff=new StringBuilder();
-        diff.append(responseTime.ofMinutes(0));
+        
     }
 
     public void processError(String message,String func,String DTTM){
