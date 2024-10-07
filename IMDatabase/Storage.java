@@ -8,8 +8,8 @@ public class Storage {
 
     private final Logger logger=Logger.getLogger(Storage.class.getName());
     Map<String,Class<?>> schema;
-    Map<String,Object> data; 
-    //Think of a way to insert into this when data is sent
+    Map<String,List<Object>> data; 
+    //Think of a way to insert into this when data is sent,
     public void executeQuery(String query){
         String [] commands=query.split(" ");
         switch(commands[0].toUpperCase()){
@@ -65,14 +65,45 @@ public class Storage {
                     logger.log(Level.SEVERE, ">>Create the Schema first");
                 }
                 String SValues[]=commands[1].split(",");
-                //will need to refine the * query and also the output needs to be in a tabular form
-                if(SValues.length >= 1 && !SValues[0].endsWith("*")){
-                    for(int i=0;i<SValues.length;i++){
-                        select.append(data.get(SValues[i])).append(",");
+                boolean catchAll=false;
+                for(String vals : SValues){
+                    if(vals == "*"){
+                        catchAll=true;
                     }
-                    System.out.println(select.toString());
+                }
+                for(String vals :SValues){
+
+                    System.out.printf("%-20s",vals);
+                }
+                System.out.println();
+                System.out.println("--------------------------------------------------------------------------------------------------------------------");
+                
+                //will need to refine the * query and also the output needs to be in a tabular form
+                if(SValues.length >= 1 && !catchAll){
+
+            //Data stores lists for each of the values. We need to find which list has the largest amount of values
+            //amongst the ones asked for in the query so as to replace the others will "Null" -> this might be handled in the insert query
+            //also need to print the list values one after the other
+
+            //Currently its printing one column at a time. Which is wrong i need to do it row at a time
+            for (String SValue : SValues) {
+                for (int j = 0; j < data.get(SValue).size(); j++) {
+                    System.out.printf("%-20s", data.get(SValue).get(j));
+                    System.out.println();
+                }
+            }
+            
+                    
                     logger.log(Level.INFO,">> Data fetched and displayed");
                 }
+                // For now to keep it simple to start we will ignore cases like Select (Select MAX(age) from students) as max_age,* from students;
+                // else if(SValues.length >= 1 && catchAll){
+                //     for(int i=0;i<SValues.length;i++){
+                //         if(SValues[i] != "*" && SValues.length - i != 1){
+                //             select.append(data.get(SValues[i])).append(",");
+                //         }
+                //     }
+                // }
                 //same the output need to be refined
                 else{
                     for(Object value:data.values()){
