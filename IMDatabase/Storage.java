@@ -1,6 +1,7 @@
 package IMDatabase;
 
 import java.util.*;
+import java.util.jar.Attributes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +26,12 @@ public class Storage {
             for(int i=0;i<IAttributes.length;i++){
                 String className=Values[i].getClass().getSimpleName();
                 if(className.equalsIgnoreCase(schema.get(IAttributes[i]).toString())){
-                    data.put(IAttributes[i],Values[i]);
+                    //fetch existing list of elements for the attribute
+                    List<Object> values=data.get(IAttributes[i]);
+                    //add new value to the list
+                    values.add(Values[i]);
+                    //update the list
+                    data.put(IAttributes[i],values);
                 }
                 else{
                     logger.log(Level.WARNING,">> Provide the correct type for the Attribute: "+IAttributes[i]);
@@ -80,18 +86,14 @@ public class Storage {
                 
                 //will need to refine the * query and also the output needs to be in a tabular form
                 if(SValues.length >= 1 && !catchAll){
-
-            //Data stores lists for each of the values. We need to find which list has the largest amount of values
-            //amongst the ones asked for in the query so as to replace the others will "Null" -> this might be handled in the insert query
-            //also need to print the list values one after the other
-
-            //Currently its printing one column at a time. Which is wrong i need to do it row at a time
-            for (String SValue : SValues) {
-                for (int j = 0; j < data.get(SValue).size(); j++) {
-                    System.out.printf("%-20s", data.get(SValue).get(j));
-                    System.out.println();
-                }
-            }
+                //Currently its printing one column at a time. Which is wrong i need to do it row at a time
+                    for (int j = 0; j < data.get(SValues[0]).size(); j++) {
+                        for (String SValue : SValues) {
+                            Object value= data.get(SValue).get(j);
+                            System.out.printf("%-20s", value);
+                        }
+                            System.out.println();
+                    }
             
                     
                     logger.log(Level.INFO,">> Data fetched and displayed");
@@ -105,11 +107,26 @@ public class Storage {
                 //     }
                 // }
                 //same the output need to be refined
-                else{
-                    for(Object value:data.values()){
-                          select.append(value).append(",");  
+                else if (catchAll){
+                    //Using String builder as it is faster than using multiple printf statements
+                    List<String> cloumns=new ArrayList<>(data.keySet());
+                    int numofelements=data.get(cloumns.get(0)).size();
+
+                    StringBuilder col=new StringBuilder();
+                    for (String column: cloumns)
+                    {
+                        col.append(String.format("%-20s", column));
                     }
-                    System.out.println(select.toString());
+                    System.out.println(col);
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------");
+
+                    for (int j = 0; j < numofelements; j++) {
+                        StringBuilder val=new StringBuilder();
+                        for (String column : cloumns) {
+                            val.append(String.format("%-20s", data.get(column).get(j)));
+                        }
+                        System.out.println(val);
+                    }
                     logger.log(Level.INFO,">> Data fetched and displayed");
                 }
             break;
