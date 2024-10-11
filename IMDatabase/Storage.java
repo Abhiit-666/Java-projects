@@ -1,7 +1,6 @@
 package IMDatabase;
 
 import java.util.*;
-import java.util.jar.Attributes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +17,7 @@ public class Storage {
             if(schema == null){
                 logger.log(Level.SEVERE, ">>Create the Schema first");
             }
+            //format INSERT TN (a,v,b,f,) (3,4,5,6,4)
             String IAttributes[] =commands[2].split(",");
             Object Values[]=commands[3].split(",");
             if(IAttributes.length != Values.length){
@@ -77,35 +77,34 @@ public class Storage {
                         catchAll=true;
                     }
                 }
-                for(String vals :SValues){
-
-                    System.out.printf("%-20s",vals);
-                }
-                System.out.println();
-                System.out.println("--------------------------------------------------------------------------------------------------------------------");
                 
                 //will need to refine the * query and also the output needs to be in a tabular form
+                //using StringBuilder is faster than formatting with printf
                 if(SValues.length >= 1 && !catchAll){
-                //Currently its printing one column at a time. Which is wrong i need to do it row at a time
+                    StringBuilder cols=new StringBuilder();
+                    StringBuilder values=new StringBuilder();
+                    
+                    for(String vals :SValues){
+                        
+                        cols.append(String.format("%-20s",vals));
+                    }
+                    System.out.println(cols);
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------");
+                    //Currently its printing one column at a time. Which is wrong i need to do it row at a time
+                    
                     for (int j = 0; j < data.get(SValues[0]).size(); j++) {
                         for (String SValue : SValues) {
                             Object value= data.get(SValue).get(j);
-                            System.out.printf("%-20s", value);
+                            values.append(String.format("%-20s", value));
+                            
                         }
-                            System.out.println();
+                            System.out.println(values);
                     }
             
                     
                     logger.log(Level.INFO,">> Data fetched and displayed");
                 }
-                // For now to keep it simple to start we will ignore cases like Select (Select MAX(age) from students) as max_age,* from students;
-                // else if(SValues.length >= 1 && catchAll){
-                //     for(int i=0;i<SValues.length;i++){
-                //         if(SValues[i] != "*" && SValues.length - i != 1){
-                //             select.append(data.get(SValues[i])).append(",");
-                //         }
-                //     }
-                // }
+                
                 //same the output need to be refined
                 else if (catchAll){
                     //Using String builder as it is faster than using multiple printf statements
@@ -133,6 +132,35 @@ public class Storage {
             case "UPDATE":
                 if(schema == null){
                     logger.log(Level.SEVERE, ">>Create the Schema first");
+                }
+                //format UPDATE TN val 45 where condition ; val 23 where sadasd ; and;
+                //conditions can support mulitplet variables--> where a>2andc<3 but 
+                // then must be separated by ands and should not have spaces
+                // we could split by where and the parse both sides and split again but that is 
+                // unnecessary at this point of time
+                String UpdateSplit[]=query.split(";");
+                List<String> FieldsToUpdate=new ArrayList<>();
+                List<Object> values=new ArrayList<>();
+                String UAttribute;
+                String UValue;
+                String conditions[];
+                for(int i=0;i<UpdateSplit.length;i++){
+                    String individualUpdates[]=UpdateSplit[i].split(" ");
+                    if(i == 0){
+                        UAttribute=individualUpdates[2];
+                        UValue=individualUpdates[3];
+                        conditions=individualUpdates[5].split("and");
+                    }else{
+                        UAttribute=individualUpdates[0];
+                        UValue=individualUpdates[1];
+                        conditions=individualUpdates[3].split("and");
+                    }
+                    FieldsToUpdate.add(UAttribute);
+                    values.add(UValue);
+                    //need to Parse the conditions;
+                    parseConditons(conditions);
+
+
                 }
             break;
             case "DELETE":
