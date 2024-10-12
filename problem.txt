@@ -6,19 +6,14 @@ Here’s the continuation of your list with the necessary changes (removing the 
    - **Technologies**: Java, data structures like B-trees, and concurrency control mechanisms.
 
 ### 7.Real-time Multiplayer Online Game
-Description: Build a multiplayer online game where players can join, interact, and compete in real-time. The game should handle player connections, synchronization of game state across clients, and low-latency communication.
-Key Challenges: Real-time networking, handling latency, concurrency, and synchronization.
-Technologies: Java, WebSockets, or Netty for networking.
+      Description: Build a multiplayer online game where players can join, interact, and compete in real-time. The game should handle player connections, synchronization of game state across clients, and low-latency communication.
+      Key Challenges: Real-time networking, handling latency, concurrency, and synchronization.
+      Technologies: Java, WebSockets, or Netty for networking.
 
 ### 8. **Custom HTTP Server**
    - **Description**: Build an HTTP server from scratch that can handle basic requests, such as serving static files and responding to POST/GET requests. You can later add features like support for HTTP/2, multi-threading, and TLS encryption.
    - **Key Challenges**: Understanding the HTTP protocol, multi-threading, and handling large numbers of concurrent connections.
    - **Technologies**: Java Sockets, multi-threading, and custom protocol handling.
-
-### 7. **Dynamic Plugin System**
-   - **Description**: Build a modular application that allows users to add functionality through plugins. The system should dynamically load, unload, and run plugins at runtime, allowing users to customize the software's behavior without restarting.
-   - **Key Challenges**: Designing a plugin architecture, class loading, and dynamically handling external JARs at runtime.
-   - **Technologies**: Java reflection, classloaders, and JAR file management.
 
 ### 9. **Code Versioning System**
    - **Description**: Develop a version control system (similar to Git) that tracks file changes over time. Implement commands like `commit`, `checkout`, `branch`, and `merge`. The system should store the history of changes and allow users to revert to previous versions.
