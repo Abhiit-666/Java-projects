@@ -10,15 +10,15 @@ Description: Build a multiplayer online game where players can join, interact, a
 Key Challenges: Real-time networking, handling latency, concurrency, and synchronization.
 Technologies: Java, WebSockets, or Netty for networking.
 
-### 7. **Dynamic Plugin System**
-   - **Description**: Build a modular application that allows users to add functionality through plugins. The system should dynamically load, unload, and run plugins at runtime, allowing users to customize the software's behavior without restarting.
-   - **Key Challenges**: Designing a plugin architecture, class loading, and dynamically handling external JARs at runtime.
-   - **Technologies**: Java reflection, classloaders, and JAR file management.
-
 ### 8. **Custom HTTP Server**
    - **Description**: Build an HTTP server from scratch that can handle basic requests, such as serving static files and responding to POST/GET requests. You can later add features like support for HTTP/2, multi-threading, and TLS encryption.
    - **Key Challenges**: Understanding the HTTP protocol, multi-threading, and handling large numbers of concurrent connections.
    - **Technologies**: Java Sockets, multi-threading, and custom protocol handling.
+
+### 7. **Dynamic Plugin System**
+   - **Description**: Build a modular application that allows users to add functionality through plugins. The system should dynamically load, unload, and run plugins at runtime, allowing users to customize the software's behavior without restarting.
+   - **Key Challenges**: Designing a plugin architecture, class loading, and dynamically handling external JARs at runtime.
+   - **Technologies**: Java reflection, classloaders, and JAR file management.
 
 ### 9. **Code Versioning System**
    - **Description**: Develop a version control system (similar to Git) that tracks file changes over time. Implement commands like `commit`, `checkout`, `branch`, and `merge`. The system should store the history of changes and allow users to revert to previous versions.
@@ -30,10 +30,6 @@ Technologies: Java, WebSockets, or Netty for networking.
    - **Key Challenges**: Linear algebra (matrices, vectors), real-time rendering, lighting algorithms (Phong shading), and handling large 3D scenes.
    - **Technologies**: Java, OpenGL (via LWJGL), or Java3D.
 
-### 11. **Event-Driven Simulation System**
-   - **Description**: Build a generic event-driven simulation system where users can define entities and events to simulate real-world systems. This can be adapted to different domains such as logistics, traffic flow, or even financial markets.
-   - **Key Challenges**: Event scheduling algorithms, multi-threading, and handling complex interdependent events.
-   - **Technologies**: Java, multi-threading, and event queue structures.
 
 ### 12. **Custom Search Engine**
    - **Description**: Create a search engine from scratch, including a web crawler (local files or predefined datasets), indexer, and ranking algorithm for search results. Implement algorithms for efficient searching and relevance ranking.
@@ -50,4 +46,8 @@ Technologies: Java, WebSockets, or Netty for networking.
    - **Key Challenges**: Simulating a virtual disk, file allocation methods (e.g., FAT, ext4), and managing disk blocks efficiently.
    - **Technologies**: Java, file handling, and custom data structures for file and directory management.
 
+### 11. **Event-Driven Simulation System**
+   - **Description**: Build a generic event-driven simulation system where users can define entities and events to simulate real-world systems. This can be adapted to different domains such as logistics, traffic flow, or even financial markets.
+   - **Key Challenges**: Event scheduling algorithms, multi-threading, and handling complex interdependent events.
+   - **Technologies**: Java, multi-threading, and event queue structures.
 These projects will give you a deep dive into complex, low-level systems and architectural challenges without requiring any external dependencies, AI, or ML components. Each one offers a unique set of challenges in different areas of software development.
