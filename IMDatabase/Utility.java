@@ -42,4 +42,22 @@ public class Utility {
 
     return conditionList;
    }
+
+
+   public static void createOrupdateIndex(String column,Map<String,List<Object>> data){
+        if(!data.containsKey(column)){
+            //log the error
+        }
+
+        Index index=new Index();
+        //need to check if an update is happening or just the creation of an index
+        List<Object> values=data.get(column);
+        
+        if(index.getFromHashIndex())
+
+        for(int ri=0;ri<values.size();ri++){
+            index.addToHashIndex(values.get(ri), ri);
+        }
+
+   }
 }
