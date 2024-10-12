@@ -10,6 +10,11 @@ public class Storage {
     private final Logger logger=Logger.getLogger(Storage.class.getName());
     Map<String,Class<?>> schema;
     Map<String,List<Object>> data; 
+    
+    //This stores columns and the indiced data in order of priority
+    //hence we use Linked Hash Map as normal HashMaps wont retain normal intestion order.
+    Map<String,Index> Indexcol=new LinkedHashMap<>();
+    
     //Think of a way to insert into this when data is sent,
     public void executeQuery(String query){
         String [] commands=query.split(" ");
@@ -43,12 +48,27 @@ public class Storage {
             break;
             case "CREATE":
                 //Might need to handle of () and refine the Create query later.
+                //consider only creating a single index for now. converting to multiple indexes later.
+                //in the current implementation we create a table first. Then go on to create a index
+                if(commands[1].toLowerCase().equals("index")){
+                    if(data!=null)
+                    {
+                        for(int i = 0;i<commands[2].split(",").length;i++){
+                            Index ind=Utility.createOrupdateIndex(commands[2].split(",")[i], data);
+                            Indexcol.put(commands[2].split(",")[i],ind);
+                            logger.log(Level.INFO,">> Index created");
+                        }
+                    }
+                }
                 schema=new HashMap<>();
                 data=new HashMap<>();
                 String CAttributes[] =commands[2].split(",");
                 String typeNames[]=commands[3].split(",");
                 if(CAttributes.length != typeNames.length)
                 {
+                    //if a create fails the maps should not be initialized
+                    schema=null;
+                    data=null;
                     logger.log(Level.SEVERE,">>Enter the same number of Attributes and their types: ");
                     break;
                 }
@@ -66,19 +86,37 @@ public class Storage {
                 logger.log(Level.INFO,">> Table Created");
                 
             break;
+            // a    b
+            //--------
+            // 1    3
+            // 2    3
+            // 3    5
+            // 4    4
+
+            //index generated b--> {3->{0,1}; 5->{2}; 4->{3}}
+            //select a tn where b>4
+            // we select only the index greater than value. so 5, 4 
+            // so only row 2 and 3 needs displaying
+
             case "SELECT":
-                StringBuilder select=new StringBuilder();
-                if(schema == null){
-                    logger.log(Level.SEVERE, ">>Create the Schema first");
+            
+            List<Map<String,String>> SCondList=new ArrayList<>();
+            StringBuilder select=new StringBuilder();
+            if(schema == null){
+                logger.log(Level.SEVERE, ">>Create the Schema first");
+            }
+            String SValues[]=commands[1].split(",");
+            boolean catchAll=false;
+            // select a,b tablename where i<dandj>2
+            for(String vals : SValues){
+                if(vals == "*"){
+                    catchAll=true;
                 }
-                String SValues[]=commands[1].split(",");
-                boolean catchAll=false;
-                for(String vals : SValues){
-                    if(vals == "*"){
-                        catchAll=true;
-                    }
-                }
-                
+            }
+            
+ 
+            if(commands.length<4)
+            {
                 //will need to refine the * query and also the output needs to be in a tabular form
                 //using StringBuilder is faster than formatting with printf
                 if(SValues.length >= 1 && !catchAll){
@@ -129,7 +167,18 @@ public class Storage {
                     }
                     logger.log(Level.INFO,">> Data fetched and displayed");
                 }
-            break;
+                break;
+            }
+            //we also need to first check if the conditions include indexed columns
+            else{
+                //we have a where clause
+                SCondList=Utility.parseConditions(commands[4].split("and"));
+                //iterate over the conditions list and fetch the rows that needs viewing
+                SCondList.forEach((k,v)->{
+
+                });
+                break;
+            }
             case "UPDATE":
                 if(schema == null){
                     logger.log(Level.SEVERE, ">>Create the Schema first");
@@ -166,6 +215,7 @@ public class Storage {
                 }
 
                    //a            b           c
+                  //----------------------------
                   // 1            2           3
                   // 4            1           3
                   // 3            1           4 
