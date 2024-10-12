@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 public class Storage {
 
+
     private final Logger logger=Logger.getLogger(Storage.class.getName());
     Map<String,Class<?>> schema;
     Map<String,List<Object>> data; 
@@ -143,22 +144,53 @@ public class Storage {
                 List<Object> values=new ArrayList<>();
                 String UAttribute;
                 String UValue;
-                String conditions[];
+                List<Map<String,String>> conditions=new ArrayList<>();
+                List<List<Map<String,String>>> conList=new ArrayList<>();
+                
                 for(int i=0;i<UpdateSplit.length;i++){
                     String individualUpdates[]=UpdateSplit[i].split(" ");
                     if(i == 0){
                         UAttribute=individualUpdates[2];
                         UValue=individualUpdates[3];
-                        conditions=individualUpdates[5].split("and");
+                        conditions=Utility.parseConditions(individualUpdates[5].split("and"));
+                        conList.add(conditions);
                     }else{
                         UAttribute=individualUpdates[0];
                         UValue=individualUpdates[1];
-                        conditions=individualUpdates[3].split("and");
+                        conditions=Utility.parseConditions(individualUpdates[3].split("and"));
+                        conList.add(conditions);
                     }
                     FieldsToUpdate.add(UAttribute);
                     values.add(UValue);
                     //need to Parse the conditions;
-                    parseConditons(conditions);
+                }
+
+                   //a            b           c
+                  // 1            2           3
+                  // 4            1           3
+                  // 3            1           4 
+
+                for(int i=0; i<FieldsToUpdate.size();i++){
+                    List<Object> currentValues = data.get(FieldsToUpdate.get(i));
+                    List<Map<String,String>> conditionList= conList.get(i);
+                    
+                    conditionList.forEach(cond -> {
+                        cond.forEach((key,value)->{
+                            String conColumn=cond.get("column");
+                            List<Object> conColumnValues=data.get(conColumn);
+                            String conOperator=cond.get("Operator");
+                            String conValue=cond.get("value");
+
+                            for(int j=0;j<conColumnValues.size();j++){
+                                switch(conOperator){
+                                    case ">":
+                                        if(conColumnValues[j] > conValue){}
+                                }
+                            }
+
+                        });
+                    });
+                    
 
 
                 }
