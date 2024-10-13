@@ -1,6 +1,7 @@
 package IMDatabase;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -177,7 +178,12 @@ public class Storage {
                 //we have a where clause
                 SCondList=Utility.parseConditions(commands[4].split("and"));
                 //iterate over the conditions list and fetch the rows that needs viewing
-                List<Integer> flatList=new ArrayList<>();
+
+                //local variables used within lamdas need to be final. and final varaibles cannot be updated
+                //hence the problem of updating local variables withing lamdas.
+                //We used AtomicResference here that will store the reference to a datastructure present withing it.
+                //We can use this muttable reference within the lamda to fetch the DS and operate on it/update it
+                AtomicReference<Set<Integer>> flatListRef= new AtomicReference<>(new HashSet<>());
                 SCondList.forEach((cond)->{
                     cond.forEach((k,v)->{
                         if(Indexcol.containsKey(cond.get("column"))){//if the indexed column is in the condition we fetch the rows heres
@@ -195,10 +201,12 @@ public class Storage {
                             for(Object result : results){
                                 rowids.add(rows.getFromHashIndex(result));
                             }
-                            flatList= rowids.stream()
-                                        .flatMap(List::stream)
-                                        .collect(Collectors.toList());
-            
+                            flatListRef.get().addAll(
+                                 rowids.stream()
+                                            .flatMap(List::stream)
+                                            .collect(Collectors.toSet())
+                            );
+                                
                         }
                         else{
                             
