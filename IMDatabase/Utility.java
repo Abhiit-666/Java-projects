@@ -59,7 +59,106 @@ public class Utility {
         return index;
    }
 
-   public static void convertType(Set<Object> keys, String value){
-    if(keys. instanceof Integer.)
+   public static Set<Object> convertType(Set<Object> keys, String value,String operator){
+            
+            Set<Object> resultSet= operation(keys,value,operator);
+        return resultSet;
+   }
+ 
+   //from the indexed row check which values are valid to find the rows for them in the Storage class
+   public static Set<Object> operation(Set<Object> keys, Object value, String operator){
+    Set<Object> resultSet=new HashSet<>();
+    for(Object key : keys){
+        if(key instanceof Integer){
+            int Ikey=(Integer) key;
+            int Ivalue=(Integer) value;
+            switch(operator){
+                case "<":
+                    if(Ikey < Ivalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case ">":
+                    if(Ikey > Ivalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case "=":
+                    if(Ikey == Ivalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case "!=":
+                    if(Ikey != Ivalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case "<=":
+                    if(Ikey <= Ivalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case ">=":
+                    if(Ikey >= Ivalue){
+                        resultSet.add(key);
+                    }
+                break;
+            }
+        }
+        else if(key instanceof Double){
+            double Dkey=(Double) key;
+            double Dvalue=(Double) value;
+            switch(operator){
+                case "<":
+                    if(Dkey < Dvalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case ">":
+                    if(Dkey > Dvalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case "=":
+                    if(Dkey == Dvalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case "!=":
+                    if(Dkey != Dvalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case "<=":
+                    if(Dkey <= Dvalue){
+                        resultSet.add(key);
+                    }
+                break;
+                case ">=":
+                    if(Dkey >= Dvalue){
+                        resultSet.add(key);
+                    }
+                break;
+            }
+        }
+        else{
+            String Skey=(String)key;
+            String Svalue=(String) value;
+            switch(operator){
+                case "=":
+                    if(Skey.equalsIgnoreCase( Svalue)){
+                        resultSet.add(key);
+                    }
+                break;
+                case "!=":
+                    if(!Skey.equalsIgnoreCase(Svalue)){
+                        resultSet.add(key);
+                    }
+                break;
+            }
+        }
+    }
+
+    return null;
    }
 }

@@ -3,6 +3,7 @@ package IMDatabase;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Storage {
 
@@ -170,37 +171,37 @@ public class Storage {
                 break;
             }
             //we also need to first check if the conditions include indexed columns
+            //only if the conditions are on indexed columns these are useful
             //[{s->{}}]
             else{
                 //we have a where clause
                 SCondList=Utility.parseConditions(commands[4].split("and"));
                 //iterate over the conditions list and fetch the rows that needs viewing
+                List<Integer> flatList=new ArrayList<>();
                 SCondList.forEach((cond)->{
                     cond.forEach((k,v)->{
-                        if(Indexcol.containsKey(cond.get("column"))){
-                            switch(cond.get("Operator")){
-                                case ">":
+                        if(Indexcol.containsKey(cond.get("column"))){//if the indexed column is in the condition we fetch the rows heres
+                            
+                            //we dont need to do the switch case here
+                            
                                     //create function to parse objects to its type and compare with 
                                     //condition value.
-                                    String val=cond.get("value");
-                                    // we need to compare value with the keys in Indexcol
-                                    Index rows= Indexcol.get(cond.get("column"));
-                                    if(rows.keySets().contains(cond.get("column"))){
-                                        Utility.convertType(rows.keySets(), val);
-                                    }
-
-                                break;
-                                case "<":
-                                break;
-                                case "=":
-                                break;
-                                case ">=":
-                                break;
-                                case "<=":
-                                break;
-                                case "!=":
-                                break;
+                            List<List<Integer>> rowids=new ArrayList<>();
+                            String val=cond.get("value");
+                            // we need to compare value with the keys in Indexcol
+                            Index rows= Indexcol.get(cond.get("column"));
+                    
+                            Set<Object> results=Utility.convertType(rows.keySets(), val,cond.get("Operator"));
+                            for(Object result : results){
+                                rowids.add(rows.getFromHashIndex(result));
                             }
+                            flatList= rowids.stream()
+                                        .flatMap(List::stream)
+                                        .collect(Collectors.toList());
+            
+                        }
+                        else{
+                            
                         }
                     });
 
