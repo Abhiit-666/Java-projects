@@ -47,7 +47,7 @@ public class Storage {
             }
             break;
             case "CREATE":
-                //Might need to handle of () and refine the Create query later.
+                //Might need handling of () and refine the Create query later.
                 //consider only creating a single index for now. converting to multiple indexes later.
                 //in the current implementation we create a table first. Then go on to create a index
                 if(commands[1].toLowerCase().equals("index")){
@@ -170,11 +170,39 @@ public class Storage {
                 break;
             }
             //we also need to first check if the conditions include indexed columns
+            //[{s->{}}]
             else{
                 //we have a where clause
                 SCondList=Utility.parseConditions(commands[4].split("and"));
                 //iterate over the conditions list and fetch the rows that needs viewing
-                SCondList.forEach((k,v)->{
+                SCondList.forEach((cond)->{
+                    cond.forEach((k,v)->{
+                        if(Indexcol.containsKey(cond.get("column"))){
+                            switch(cond.get("Operator")){
+                                case ">":
+                                    //create function to parse objects to its type and compare with 
+                                    //condition value.
+                                    String val=cond.get("value");
+                                    // we need to compare value with the keys in Indexcol
+                                    Index rows= Indexcol.get(cond.get("column"));
+                                    if(rows.keySets().contains(cond.get("column"))){
+                                        Utility.convertType(rows.keySets(), val);
+                                    }
+
+                                break;
+                                case "<":
+                                break;
+                                case "=":
+                                break;
+                                case ">=":
+                                break;
+                                case "<=":
+                                break;
+                                case "!=":
+                                break;
+                            }
+                        }
+                    });
 
                 });
                 break;
@@ -183,6 +211,7 @@ public class Storage {
                 if(schema == null){
                     logger.log(Level.SEVERE, ">>Create the Schema first");
                 }
+
                 //format UPDATE TN val 45 where condition ; val 23 where sadasd ; and;
                 //conditions can support mulitplet variables--> where a>2andc<3 but 
                 // then must be separated by ands and should not have spaces
@@ -231,10 +260,14 @@ public class Storage {
                             String conOperator=cond.get("Operator");
                             String conValue=cond.get("value");
 
+                            //if we use indexes we might not need to compare all the values 
+                            //if we are using the indexes in the where clause
                             for(int j=0;j<conColumnValues.size();j++){
                                 switch(conOperator){
                                     case ">":
-                                        if(conColumnValues[j] > conValue){}
+                                        if((int)conColumnValues.get(j) > (int)conValue){
+
+                                        }
                                 }
                             }
 

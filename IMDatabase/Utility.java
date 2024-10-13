@@ -58,4 +58,8 @@ public class Utility {
         }
         return index;
    }
+
+   public static void convertType(Set<Object> keys, String value){
+    if(keys. instanceof Integer.)
+   }
 }

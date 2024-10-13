@@ -1,0 +1,20 @@
+6. Custom In-Memory Database
+Data Modeling: Designing efficient data structures like B-trees, hash maps, and skip lists to enable fast data access and retrieval.
+Indexing and Query Optimization: Creating indexing mechanisms and understanding how to execute efficient query plans.
+Concurrency Control: Implementing mechanisms like locks, optimistic/pessimistic concurrency, and multiversion concurrency control (MVCC) for handling multiple requests.
+Transaction Management: Designing for ACID (Atomicity, Consistency, Isolation, Durability) compliance with features like rollbacks and commit points.
+Memory Management: Allocating and managing memory efficiently, with strategies for garbage collection and buffer management.
+
+7. Real-Time Multiplayer Online Game
+Networking and Protocol Design: Using protocols like UDP for fast, real-time communication, or WebSockets for client-server communication.
+Synchronization: Handling the consistency of game state across clients with techniques like state synchronization, delta updates, and rollback mechanisms.
+Latency and Bandwidth Management: Designing for low-latency communication with techniques such as packet buffering and predictive algorithms.
+Scalability: Ensuring the server can handle increasing numbers of players through horizontal scaling or server partitioning.
+Load Balancing: Distributing player connections across servers to prevent overloads and to maintain low latency.
+
+8. Custom HTTP Server
+Request Handling and Routing: Designing a request-handling mechanism with efficient routing to direct requests to the appropriate handlers.
+Concurrency and Multi-Threading: Using thread pools or async handling to manage a high volume of concurrent connections.
+Session Management: Designing methods for session persistence (e.g., cookies, tokens) to handle user-specific data.
+Security and Encryption: Adding TLS/SSL for encrypted connections and exploring authentication techniques for secure request handling.
+Scalability and Load Management: Creating mechanisms for load balancing and fault tolerance for handling spikes in requests and distributing load across instances.

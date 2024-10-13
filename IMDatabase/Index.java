@@ -14,4 +14,8 @@ public class Index {
         return hashIndex.getOrDefault(key, new ArrayList<>());
     }
 
+    public Set<Object> keySets(){
+        return hashIndex.keySet();
+    }
+
 }
